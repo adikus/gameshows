@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./frontend/**/*.{vue,js}",
-    "./views/**/*.{html}",
+    "./views/**/*.{html,hbs}",
   ],
   theme: {
     extend: {},
