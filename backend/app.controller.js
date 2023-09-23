@@ -20,7 +20,6 @@ export class AppController {
     @Redirect()
     @Bind(Req())
     assetsRedirect(req) {
-        console.log(req.baseUrl, req.path, `http://localhost:${process.env.ASSETS_PORT}${req.baseUrl}${req.path}`   )
         return {
             statusCode: 303,
             url: `http://localhost:${this.configService.get('ASSETS_PORT')}${req.baseUrl}${req.path}`
