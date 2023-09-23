@@ -13,8 +13,8 @@
         <script type="module" src="/@vite/client"></script>
     {{/if}}
 </head>
-<body>
-    <div id="app">{{ message }}</div>
+<body class="bg-indigo-950 text-blue-50 h-full">
+    <div class="min-h-screen w-full absolute top-0" id="app"></div>
 
     {{#if manifest}}
         {{#each manifest.scripts}}
