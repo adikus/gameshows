@@ -10,6 +10,7 @@
     "frontend:build": "vite build"
   },
   "dependencies": {
+    "@babel/runtime": "^7.18.6",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
@@ -26,7 +27,6 @@
     "@babel/plugin-transform-runtime": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
     "@babel/register": "^7.18.6",
-    "@babel/runtime": "^7.18.6",
     "@heroicons/vue": "^2.0.18",
     "@vitejs/plugin-vue": "^4.3.4",
     "autoprefixer": "^10.4.16",
