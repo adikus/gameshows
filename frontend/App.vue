@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="absolute bottom-[110%] inset-x-0">
+        <div class="absolute bottom-[110%] right-2">
             <Toast :messages="messages"></Toast>
         </div>
     </footer>
