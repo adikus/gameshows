@@ -13,6 +13,7 @@ FROM base AS build
 
 COPY frontend frontend
 COPY backend backend
+COPY views views
 COPY vite.config.js ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
