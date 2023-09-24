@@ -190,7 +190,7 @@ export default {
         },
         addTeam() {
             const id = this.generateId()
-            this.teams.push({ id, name: "New name" })
+            this.teams.push({ id, name: "New team" })
         },
         nextValue(categoryIndex, questionIndex) {
             return this.categories[categoryIndex - 1]?.questions[questionIndex]?.value ??
