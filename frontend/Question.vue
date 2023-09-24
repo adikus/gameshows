@@ -51,10 +51,10 @@
                 return `relative group mt-4 p-2 border-4 border-indigo-800 bg-indigo-900 rounded-md drop-shadow-xl shadow-lg ${cursorClass}`
             },
             formattedQuestion() {
-                return this.$sanitize(this.question.question.replace("\n", "<br>"))
+                return this.$sanitize(this.question.question?.replace("\n", "<br>"))
             },
             formattedAnswer() {
-                return this.$sanitize(this.question.answer.replace("\n", "<br>"))
+                return this.$sanitize(this.question.answer?.replace("\n", "<br>"))
             }
         },
         methods: {

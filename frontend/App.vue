@@ -98,7 +98,6 @@ export default {
             })
             if (lastState !== newState) {
                 window.localStorage.setItem('jeopardy-state', newState)
-                console.log('save')
                 this.debouncedSaveMessage()
             }
         }, 1000)
@@ -202,6 +201,9 @@ export default {
                 this.game.state = 'editing'
             } else if (this.game.state === 'answeringQuestion') {
                 this.game.state = 'pickingQuestion'
+                this.teams.forEach((team) => {
+                    team.answer = null
+                })
                 this.game.question = null
             } else {
                 this.game.state = 'pickingTeams'
