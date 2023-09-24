@@ -13,18 +13,63 @@
         <script type="module" src="/@vite/client"></script>
     {{/if}}
 </head>
-<body class="bg-indigo-950 text-blue-50 h-full">
-<div>
-    <h1>Landing page</h1>
-    <a href="/jeopardy/create">Create a game</a>
-</div>
+<body class="bg-gradient-to-b from-indigo-950 to-slate-950 text-blue-50 h-full">
+    <div class="container mx-auto text-center">
+        <div class="mt-16">
+            <span class="text-8xl font-bold leading-tight text-center border-b-8 border-indigo-800">Jeopardy-like</span>
+            <br>
+            <span class="text-8xl font-bold leading-tight text-center border-b-8 border-indigo-800">game maker</span>
 
-{{#if manifest}}
-    {{#each manifest.scripts}}
-        <link rel="stylesheet" href="/{{this}}">
-        <script src="/{{this}}"></script>
-    {{/each}}
-{{else}}
+            <div class="mt-8 max-w-[60%] mx-auto text-2xl text-center text-indigo-200 leading-relaxed">
+                Create your own Jeopardy-like quiz game and play with your friends over discord, or your audience on Twitch or YouTube.
+            </div>
+
+            <a href="/jeopardy/create" class="block mt-8 mx-auto bg-indigo-800 w-64 h-12 flex items-center justify-center rounded-md ring-2 ring-indigo-700 hover:ring-indigo-500 drop-shadow-xl shadow-lg">
+                Create a game
+            </a>
+
+            <div class="mt-32 max-w-[50%] mx-auto text-indigo-200 leading-relaxed">
+                Discover a simple and efficient way to host your own Jeopardy-style trivia game with our app, completely free!
+                Tailor your game by creating categories and questions that suit your content and audience.
+                Invite participants to join in real-time, making it perfect for live events or gatherings.
+
+                <div class="text-2xl font-bold mt-8 mb-4">How It Works:</div>
+                <ol class="list-decimal list-inside max-w-[400px] mx-auto">
+                    <li>
+                        <span class="font-bold text-indigo-100">Create Your Game:</span>
+                        Begin by customizing your Jeopardy-style game. Define categories, craft questions, and input answers that resonate with your friends or audience.
+                    </li>
+                    <li>
+                        <span class="font-bold text-indigo-100">Invite Participants:</span>
+                        Share a link to the game to invite friends or viewers to join your trivia session.
+                    </li>
+                    <li>
+                        <span class="font-bold text-indigo-100">Enjoy the game:</span>
+                        The app is designed to be user-friendly and transparent. Enjoy the streamlined game play experience while your friends follow along.
+                    </li>
+                </ol>
+
+                <div class="text-2xl font-bold mt-8 mb-4">More things coming soon</div>
+                <div class="max-w-[400px] mx-auto">
+                    The app is still under development. Stay tuned for more updates to the game and even new games.
+                </div>
+            </div>
+
+            <div class="mt-32 pb-4 text-indigo-300 text-center">
+                Any feedback? Let us know at
+                <a href="mailto:gm@adikus.me" class="text-indigo-200 hover:underline">gm@adikus.me</a>
+                <br>
+                © adikus | 2023
+            </div>
+        </div>
+    </div>
+
+    {{#if manifest}}
+        {{#each manifest.scripts}}
+            <link rel="stylesheet" href="/{{this}}">
+            <script src="/{{this}}"></script>
+        {{/each}}
+    {{else}}
     <script type="module" src="/frontend/main.js"></script>
 {{/if}}
 </body>
