@@ -12,6 +12,7 @@ RUN npm install --omit=dev
 FROM base AS build
 
 COPY frontend frontend
+COPY backend backend
 COPY vite.config.js ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
@@ -26,7 +27,6 @@ RUN npm run backend:build
 FROM base AS final
 
 COPY index.js ./
-COPY backend backend
 COPY public public
 COPY views views
 COPY --from=build /app/dist dist
