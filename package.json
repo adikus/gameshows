@@ -14,7 +14,9 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "cookie-parser": "^1.4.6",
-    "lodash": "^4.17.21"
+    "floating-vue": "^2.0.0-beta.24",
+    "lodash": "^4.17.21",
+    "vue-3-sanitize": "^0.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
