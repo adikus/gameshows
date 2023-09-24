@@ -15,6 +15,8 @@ COPY frontend frontend
 COPY vite.config.js ./
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
+COPY .babelrc ./
+COPY jsconfig.json ./
 
 RUN npm install --include=dev
 RUN npm run frontend:build
