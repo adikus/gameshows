@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+<!--    <link rel="icon" href="/favicon.ico">-->
+    <meta name="viewport" content="width=device-width" initial-scale="2.0">
+    {{#if manifest}}
+        {{#each manifest.stylesheets}}
+            <link rel="stylesheet" href="/{{this}}">
+        {{/each}}
+    {{else}}
+        <script type="module" src="/@vite/client"></script>
+    {{/if}}
+    <script>
+        window.token = '{{token}}';
+    </script>
+</head>
+<body class="bg-indigo-950 text-blue-50 h-full">
+    <div class="min-h-screen w-full absolute top-0" id="app-join"></div>
+
+    {{#if manifest}}
+        {{#each manifest.scripts}}
+            <link rel="stylesheet" href="/{{this}}">
+            <script src="/{{this}}"></script>
+        {{/each}}
+    {{else}}
+        <script type="module" src="/frontend/main.js"></script>
+    {{/if}}
+</body>
+</html>

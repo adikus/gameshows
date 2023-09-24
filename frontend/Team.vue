@@ -4,7 +4,7 @@
             <XCircleIcon class="absolute -right-2 -top-2 h-6 w-6 text-red-700 cursor-pointer transition-opacity opacity-0 group-hover:opacity-100" @click="$emit('delete')"/>
             <input class="ml-1 w-32 text-center flex-grow bg-indigo-900 rounded-md appearance-none focus:shadow-xl ring-indigo-600 focus:ring-2 focus:outline-none" v-model="team.name"/>
         </template>
-        <template v-else-if="state === 'answeringQuestion'">
+        <template v-else-if="state === 'answeringQuestion' || state.includes('guest')">
             <div class="px-4 text-2xl text-center">{{team.name}}</div>
             <div class="mt-2 text-center">
                 {{formattedScore}}
@@ -15,7 +15,7 @@
                     - <span class="text-red-600">${{answerValue}}</span>
                 </template>
             </div>
-            <div class="mt-2 flex justify-center space-x-4">
+            <div v-if="!state.includes('guest')" class="mt-2 flex justify-center space-x-4">
                 <CheckIcon class="h-6 w-6 cursor-pointer" :class="team.answer === 'correct' ? 'text-green-600 hover:text-green-500' : 'text-indigo-300 hover:text-indigo-200'" @click="toggleCorrectAnswer()"/>
                 <XMarkIcon class="h-6 w-6 cursor-pointer" :class="team.answer === 'incorrect' ? 'text-red-600 hover:text-red-500' : 'text-indigo-300 hover:text-indigo-200'" @click="toggleIncorrectAnswer()"/>
             </div>

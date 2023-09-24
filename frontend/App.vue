@@ -32,6 +32,18 @@
                 <Team v-for="team in teams" :team="team" :state="game.state" @delete="removeTeam(team)"></Team>
             </div>
             <div class="mt-16 flex justify-center">
+                <div class="w-full">
+                    <div class="w-full text-center text-2xl font-bold mb-2">How to play</div>
+                    <div class="text-center text-indigo-300 mb-2">
+                        This screen is meant for your eyes only.
+                        <br>
+                        You can share the link below with other teams,
+                        or you can stream it (e.g. on Discord or Twitch)
+                    </div>
+                    <input class="block mx-auto p-1 w-[500px] rounded-md text-center text-slate-800" readonly :value="joinLink">
+                </div>
+            </div>
+            <div class="mt-4 flex justify-center">
                 <div class="cursor-pointer text-indigo-300 opacity-75 flex items-center" @click="resetGame()">
                     <ArrowPathIcon class="w-4 h-4 mr-1"></ArrowPathIcon>
                     Reset game
@@ -80,7 +92,8 @@
 
 <script>
 import { XCircleIcon, ChevronLeftIcon, ChevronRightIcon, ArrowPathIcon } from '@heroicons/vue/20/solid'
-import { debounce } from 'lodash'
+import { debounce, throttle } from 'lodash'
+import { io } from "socket.io-client"
 
 import Team from './Team.vue'
 import Toast from './Toast.vue'
@@ -101,18 +114,35 @@ export default {
                 this.debouncedSaveMessage()
             }
         }, 1000)
+
+        this.socket = io('http://localhost:3000');
+        this.socket.on("connect", () => {
+            if (!this.game.id) this.game.id = this.generateId()
+            this.socket.emit('jeopardy:subscribe', { token: this.game.id })
+        });
+        this.socket.on("jeopardy:join", () => {
+            this.debouncedBroadcast()
+        });
+    },
+    unmounted() {
+        clearInterval(this.saveInterval)
+        this.socket?.disconnect()
     },
     created() {
         this.debouncedSaveMessage = debounce(() => {
             this.messages.push('Game saved')
-            console.log(this.messages)
         }, 1500, { trailing: true })
+
+        this.debouncedBroadcast = throttle(() => {
+            this.socket.emit('jeopardy:broadcast', { token: this.game.id, state: this.serializePublicState() })
+        }, 50)
     },
     data() {
         const defaultState = {
             ...defaultQuestions,
             teams: [],
             game: {
+                id: null,
                 state: 'editing'
             },
         }
@@ -132,6 +162,11 @@ export default {
         }
 
         return { ...defaultState, ...overrideState }
+    },
+    computed: {
+        joinLink() {
+            return `http://localhost:3000/jeopardy/join?token=${this.game.id}`
+        }
     },
     methods: {
         categoryClass() {
@@ -226,6 +261,50 @@ export default {
                         question.answerRevealed = false
                     })
                 })
+            }
+        },
+        serializePublicState() {
+            return {
+                game: {
+                    state: this.game.state === 'answeringQuestion' ? 'guestAnsweringQuestion' : 'guestPickingQuestion',
+                    question: this.game.question ? this.serializePublicQuestion(this.game.question) : null
+                },
+                teams: this.teams,
+                categories: this.categories.map(({name, questions}) => {
+                    return {
+                        name, questions: questions.map((question) => this.serializePublicQuestion(question))
+                    }
+                })
+            }
+        },
+        serializePublicQuestion({ id, question, answer, value, answered, answerRevealed }) {
+            return {
+                id,
+                question: answered || this.game.question?.id === id ? question : null,
+                answer: answered || answerRevealed ? answer : null,
+                value,
+                answered,
+                answerRevealed
+            }
+        }
+    },
+    watch: {
+        game: {
+            deep: true,
+            handler() {
+                this.debouncedBroadcast()
+            }
+        },
+        categories: {
+            deep: true,
+            handler() {
+                this.debouncedBroadcast()
+            }
+        },
+        teams: {
+            deep: true,
+            handler() {
+                this.debouncedBroadcast()
             }
         }
     }

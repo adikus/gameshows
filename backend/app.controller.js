@@ -1,4 +1,4 @@
-import { Controller, Dependencies, Bind, Get, Req, Render, Redirect } from '@nestjs/common';
+import { Controller, Dependencies, Bind, Get, Req, Render, Redirect, Query } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Controller()
@@ -19,6 +19,13 @@ export class AppController {
     @Get('/jeopardy/create')
     @Render('jeopardy/create')
     jeopardyCreate() {}
+
+    @Get('/jeopardy/join')
+    @Render('jeopardy/join')
+    @Bind(Query('token'))
+    jeopardyJoin(token) {
+        return { token }
+    }
 
     @Get(['/frontend/*', '/node_modules/*', '/@vite/*'])
     @Redirect()

@@ -11,9 +11,9 @@
             <textarea class="block mt-1 p-2 w-full text-center bg-indigo-900 rounded-md focus:shadow-xl ring-indigo-600 focus:ring-2 focus:outline-none resize-none focus:resize-y" v-model="question.question"></textarea>
             <textarea class="block mt-1 p-2 w-full text-center bg-indigo-900 rounded-md focus:shadow-xl ring-indigo-600 focus:ring-2 focus:outline-none resize-none focus:resize-y" rows="1" v-model="question.answer"></textarea>
         </template>
-        <template v-else-if="state !== 'answeringQuestion'">
+        <template v-else-if="state !== 'answeringQuestion' && state !== 'guestAnsweringQuestion'">
             <div class="py-2 text-2xl font-bold text-center" :class="question.answered ? 'opacity-40' : ''">${{question.value}}</div>
-            <div class="truncate text-indigo-300" :class="question.answered ? 'opacity-40' : ''">{{question.question}}</div>
+            <div v-if="!state.includes('guest')" class="truncate text-indigo-300" :class="question.answered ? 'opacity-40' : ''">{{question.question}}</div>
         </template>
         <template v-else>
             <div class="flex justify-between text-indigo-300 text-xl">
@@ -44,7 +44,10 @@
         computed: {
             questionClass() {
                 if (this.state === 'answeringQuestion') {
-                    return 'absolute p-12 pt-4 top-0 left-0 right-0 h-almost-half-screen z-50 bg-indigo-950'
+                    return 'absolute p-12 pt-4 top-0 left-0 right-0 h-almost-half z-50 bg-indigo-950'
+                }
+                if (this.state === 'guestAnsweringQuestion') {
+                    return 'absolute p-12 pt-4 top-0 left-0 right-0 h-almost-two-thirds z-50 bg-indigo-950'
                 }
 
                 const cursorClass = this.state === 'pickingQuestion' && !this.question.answered ? 'cursor-pointer' : ''
@@ -76,7 +79,13 @@
         -webkit-appearance: none;
     }
 
-    .h-almost-half-screen {
+    .h-almost-half {
         height: calc(50% - 4.25rem);
+    }
+    .h-almost-two-thirds {
+        height: calc(66% - 4.25rem);
+    }
+    .h-almost-full {
+        height: calc(100% - 4.25rem);
     }
 </style>

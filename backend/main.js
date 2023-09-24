@@ -19,6 +19,11 @@ async function bootstrap() {
 
     app.use(cookieParser());
 
+    // Uncomment these lines to use the Redis adapter:
+    // const redisIoAdapter = new RedisIoAdapter(app);
+    // await redisIoAdapter.connectToRedis();
+    // app.useWebSocketAdapter(redisIoAdapter);
+
     await app.listen(PORT);
 }
 bootstrap();
