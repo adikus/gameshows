@@ -115,7 +115,7 @@ export default {
             }
         }, 1000)
 
-        this.socket = io('http://localhost:3000');
+        this.socket = io(window.baseUrl);
         this.socket.on("connect", () => {
             if (!this.game.id) this.game.id = this.generateId()
             this.socket.emit('jeopardy:subscribe', { token: this.game.id })
@@ -165,7 +165,7 @@ export default {
     },
     computed: {
         joinLink() {
-            return `http://localhost:3000/jeopardy/join?token=${this.game.id}`
+            return `${window.baseUrl}/jeopardy/join?token=${this.game.id}`
         }
     },
     methods: {

@@ -12,6 +12,9 @@
     {{else}}
         <script type="module" src="/@vite/client"></script>
     {{/if}}
+    <script>
+        window.baseUrl = '{{baseUrl}}';
+    </script>
 </head>
 <body class="bg-indigo-950 text-blue-50 h-full">
     <div class="min-h-screen w-full absolute top-0" id="app"></div>

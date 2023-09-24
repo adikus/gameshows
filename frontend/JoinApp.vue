@@ -29,7 +29,7 @@ import Question from './Question.vue'
 export default {
     components: { Team, Question },
     mounted() {
-        this.socket = io('http://localhost:3000');
+        this.socket = io(window.baseUrl);
         this.socket.on("connect", () => {
             this.socket.emit('jeopardy:subscribe', { token: window.token })
             this.joinInterval = setInterval(() => {

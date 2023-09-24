@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppGateway } from './app.gateway';
 import { ManifestMiddleware } from './manifest.middleware'
+import { CommonVariablesMiddleware } from './commonVariables.middleware'
 
 @Module({
     providers: [AppGateway],
@@ -12,7 +13,7 @@ import { ManifestMiddleware } from './manifest.middleware'
 export class AppModule {
     configure(consumer) {
         consumer
-            .apply(ManifestMiddleware)
+            .apply(ManifestMiddleware, CommonVariablesMiddleware)
             .forRoutes({ path: "*", method: RequestMethod.ALL });
     }
 }
